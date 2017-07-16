@@ -54,7 +54,7 @@ values."
      (ibuffer :variables ibuffer-group-buffers-by 'projects)
      (auto-completion :variables auto-completion-enable-sort-by-usage t
                       auto-completion-enable-snippets-in-popup t
-                      :disabled-for org markdown)
+                      :disabled-for markdown)
      (osx :variables osx-dictionary-dictionary-choice "Simplified Chinese - English"
           osx-command-as 'super)
      restclient
@@ -76,23 +76,41 @@ values."
      html
      javascript
      (typescript :variables
-                typescript-fmt-on-save nil
-                typescript-fmt-tool 'typescript-formatter)
+                 typescript-fmt-on-save nil
+                 typescript-fmt-tool 'typescript-formatter)
      emacs-lisp
      (clojure :variables clojure-enable-fancify-symbols t)
      racket
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode)
-     zilongshanren
+     wangliang
      (chinese :packages youdao-dictionary fcitx
               :variables chinese-enable-fcitx nil
               chinese-enable-youdao-dict t)
+     emoji
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(sicp)
+   dotspacemacs-additional-packages '(
+                                      elfeed
+                                      elfeed-org
+                                      bing-dict ;; 翻译且保存, 拥有自己的词典.
+                                      org-gcal
+                                      calfw-gcal
+                                      calfw
+                                      request
+                                      ein ;; add the ein package (Emacs ipython notebook)
+                                      elpy
+                                      py-autopep8 ;; add the autopep8 pep8
+                                      tern-auto-complete
+                                      cal-china-x
+                                      org-alert
+                                      kanban
+                                      sicp
+                                      kotlin-mode
+                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    dotspacemacs-excluded-packages
@@ -101,7 +119,7 @@ values."
                     evil-indent-plus volatile-highlights smartparens
                     spaceline holy-mode skewer-mode rainbow-delimiters
                     highlight-indentation vi-tilde-fringe eyebrowse
-                    org-bullets smooth-scrolling org-repo-todo org-download org-timer
+                    smooth-scrolling org-repo-todo org-download org-timer
                     livid-mode git-gutter git-gutter-fringe  evil-escape
                     leuven-theme gh-md evil-lisp-state spray lorem-ipsum symon
                     ac-ispell ace-jump-mode auto-complete auto-dictionary
@@ -174,7 +192,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(solarized-light
+   dotspacemacs-themes '(
+                         solarized-light
                          solarized-dark)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -220,7 +239,7 @@ values."
    ;; (default nil)
    dotspacemacs-ex-substitute-global nil
    ;; Name of the default layout (default "Default")
-   dotspacemacs-default-layout-name "Default"
+   dotspacemacs-default-layout-name "WangLiang"
    ;; If non nil the default layout name is displayed in the mode-line.
    ;; (default nil)
    dotspacemacs-display-default-layout nil
@@ -358,6 +377,104 @@ values."
   )
 
 (defun dotspacemacs/user-config ()
+  (require 'calfw)
+  (require 'org-gcal)
+  (setq org-gcal-client-id "704259546218-d65eg8c8heofai3lvd4qcrcvgj4rkp1k.apps.googleusercontent.com"
+        org-gcal-client-secret "Am1LJTn6AZ6httQAnJ-ge2T0"
+        org-gcal-file-alist '(("qq727474430@gmail.com" .  "~/org-notes/i.org")
+                              ))
+
+  (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+  (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
+
+  ;; org-mode 自动换行
+  (add-hook 'org-mode-hook
+            (lambda () (setq truncate-lines nil)))
+
+  (require 'bing-dict)
+  ;; config key
+  (global-set-key (kbd "C-c d") 'bing-dict-brief)
+  ;; value-list('nil', 'synonym', 'antonym', 'both') 同义词、反义词、都显示
+  (setq bing-dict-show-thesaurus 'both)
+  ;; control pronounce(发音)   uk us
+  (setq bing-dict-pronunciation-style 'uk)
+  ;; save search-result
+  (setq bing-dict-save-search-result t)
+  ;; search-result save file path
+  (setq bing-dict-org-file "~/org-notes/vocabulary.org")
+
+  (elpy-enable)
+  ;; default use ipython-repl
+  (elpy-use-ipython)
+  ;; python flycheck real-time check
+  (when (require 'flycheck nil t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode))
+  ;; pep8 Translation
+  (require 'py-autopep8)
+  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+
+  (require 'kanban)
+  (setq org-bullets-bullet-list '("🐉" "🐠" "🐬" "🐤"))
+
+  ;; appt workday rest alert
+  ;; (setq appt-message-warning-time 0)    ; 0 minute time before warning
+  ;; (setq diary-file "~/diary")
+
+
+  ;; org-mode 提醒
+  (setq appt-time-msg-list nil) ;; clear existing appt list
+  (setq appt-display-interval '5) ;; warn every 5 minutes from t - appt-message-warning-time
+  (setq
+   appt-message-warning-time '15 ;; send first warning 15 minutes before appointment
+   appt-display-mode-line nil    ;; don't show in the modeline
+   appt-display-format 'window) ;; pass warnings to the designated window function
+  (appt-activate 1)             ;; activate appointment notification
+  (display-time)                ;; activate time display
+
+  (org-agenda-to-appt) ;; generate the appt list from org agenda files on emacs launch
+  (run-at-time "24:01" 3600 'org-agenda-to-appt) ;; update appt list hourly
+  (add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt) ;; update appt list on agenda view
+
+  (defun my-appt-display (min-to-app new-time msg)
+    (notify-osx
+     (format "Appointment in %s minutes after start task \n" min-to-app) ;; passed to -title in terminal-notifier call
+     (format "%s" msg))) ;; passed to -message in terminal-notifier call
+  (setq appt-disp-window-function (function my-appt-display))
+
+  (defun notify-osx (title message)
+    (call-process "terminal-notifier"
+                  nil 0 nil
+                  "-group" "Spacemacs"
+                  "-title" title
+                  "-sender" "org.gnu.Emacs"
+                  "-message" message
+                  "-activate" "oeg.gnu.Emacs"))
+  ;; pomodoro 提醒
+  (add-hook 'org-pomodoro-finished-hook
+            (lambda ()
+              (notify-osx "Pomodoro completed!" "Time for a break.")))
+  (add-hook 'org-pomodoro-break-finished-hook
+            (lambda ()
+              (notify-osx "Pomodoro Short Break Finished" "Ready for Another?")))
+  (add-hook 'org-pomodoro-long-break-finished-hook
+            (lambda ()
+              (notify-osx "Pomodoro Long Break Finished" "Ready for Another?")))
+  (add-hook 'org-pomodoro-killed-hook
+            (lambda ()
+              (notify-osx "Pomodoro Killed" "One does not simply kill a pomodoro!")))
+
+  ;; Calander Chinese localizations display holiday
+  ;; lunar(农历), horoscope(星座), zodiac(属相、十二生肖), solar term(节气) info on mode line
+  (require 'cal-china-x)
+  (setq mark-holidays-in-calendar t)
+  (setq cal-china-x-important-holidays cal-china-x-chinese-holidays)
+  (setq cal-china-x-general-holidays '((holiday-lunar 1 15 "元宵节")))
+  (setq calendar-holidays
+        (append cal-china-x-important-holidays
+                cal-china-x-general-holidays
+                ))
+
   ;;解决org表格里面中英文对齐的问题
   (when (configuration-layer/layer-usedp 'chinese)
     (when (and (spacemacs/system-is-mac) window-system)
@@ -455,4 +572,4 @@ values."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-)
+  )

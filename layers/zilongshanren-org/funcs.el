@@ -18,7 +18,7 @@
     (shell-command-to-string command-str)))
 
 (defun zilongshanren/octopress-qrsync (command)
-  (let ((command-str (format "/usr/local/bin/qrsync %s" command )))
+  (let ((command-str (format "qshell qupload %s" command )))
     (shell-command-to-string command-str)))
 
 (defun zilongshanren/octopress-generate ()
@@ -31,19 +31,19 @@
   "default deploy task"
   (interactive)
   (zilongshanren/octopress-rake "deploy")
-  (zilongshanren/octopress-qrsync "/Users/guanghui/4gamers.cn/guanghui.json")
+  (zilongshanren/octopress-qrsync "/Users/wangliang/blog/blog.json")
   (message "Deploy site OK"))
 
 (defun zilongshanren/octopress-gen-deploy ()
   "generate website and deploy"
   (interactive)
   (zilongshanren/octopress-rake "gen_deploy")
-  (zilongshanren/octopress-qrsync "/Users/guanghui/4gamers.cn/guanghui.json")
+  (zilongshanren/octopress-qrsync "/Users/wangliang/blog/blog.json")
   (message "Generate and Deploy OK"))
 
 (defun zilongshanren/octopress-upimg ()
   (interactive)
-  (zilongshanren/octopress-qrsync "/Users/guanghui/4gamers.cn/guanghui.json")
+  (zilongshanren/octopress-qrsync "/Users/wangliang/blog/blog.json")
   (message "Up Img to Qiniu"))
 
 (defun zilongshanren/directory-parent (directory)
@@ -80,7 +80,7 @@
       (setq basename (format-time-string "%Y%m%d_%H%M%S")))
   (setq fullpath
         (concat (file-name-directory (buffer-file-name))
-                "../img/"
+                "../images/posts/"
                 (file-name-base (buffer-file-name))
                 "_"
                 basename))
@@ -91,16 +91,11 @@
                 ".png"))
   (if (file-exists-p (file-name-directory fullpath))
       (progn
-        (setq final-image-full-path (concat fullpath ".png"))
-        (call-process "screencapture" nil nil nil "-s" final-image-full-path)
-        (if (executable-find "convert")
-            (progn
-              (setq resize-command-str (format "convert %s -resize 800x600 %s" final-image-full-path final-image-full-path))
-              (shell-command-to-string resize-command-str)))
-        (zilongshanren//insert-org-or-md-img-link "../img/" relativepath))
+        (call-process "screencapture" nil nil nil "-s" (concat fullpath ".png"))
+        (zilongshanren//insert-org-or-md-img-link "http://oqrrhqyvh.bkt.clouddn.com/image/blob/" relativepath))
     (progn
       (call-process "screencapture" nil nil nil "-s" (concat basename ".png"))
-      (zilongshanren//insert-org-or-md-img-link "./" (concat basename ".png"))))
+      (zilongshanren//insert-org-or-md-img-link "http://ore0a0skp.bkt.clouddn.com/" (concat basename ".png"))))
   (insert "\n"))
 
 (defun zilongshanren/org-archive-done-tasks ()
@@ -142,7 +137,7 @@
               nil)) ; a stuck project, has subtasks but no next task
         next-headline))))
 
-(defun zilongshanren/org-insert-src-block (src-code-type)
+(defun wangliang/org-insert-src-block (src-code-type)
   "Insert a `SRC-CODE-TYPE' type source code block in org-mode."
   (interactive
    (let ((src-code-types

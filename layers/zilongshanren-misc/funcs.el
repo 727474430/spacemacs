@@ -177,7 +177,12 @@ org-files and bookmarks"
                    ("Calculator" . (lambda () (helm-calcul-expression)))
                    ("Run current flie" . (lambda () (zilongshanren/run-current-file)))
                    ("Agenda" . (lambda () (org-agenda "" "a")))
-                   ("sicp" . (lambda() (browse-url "http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-4.html#%_toc_start")))))
+                   ("sicp" . (lambda() (browse-url "http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-4.html#%_toc_start")))
+                   ("HomePage" . (lambda () (browse-url "http://localhost:4000")))
+                   ("ZhiHu" . (lambda () (browse-url "https://www.zhihu.com/")))
+                   ("JueJin" . (lambda () (browse-url "https://juejin.im/")))
+                   ("JianShu" . (lambda () (browse-url "http://www.jianshu.com/")))
+                   ))
     (candidate-number-limit)
     (action . (("Open" . (lambda (x) (funcall x)))))))
 

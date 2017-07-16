@@ -2,8 +2,8 @@
 ;;
 ;; Copyright (c) 2014-2016 zilongshanren
 ;;
-;; Author: zilongshanren <guanghui8827@gmail.com>
-;; URL: https://github.com/zilongshanren/spacemacs-private
+;; Author: wangliang <qq727474430@gmail.com>
+;; URL: https://github.com/727474430/github.io
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -22,7 +22,7 @@
                                             ("8zh" "@~chinese")
                                             ("8sp" "spacemacs")
                                             ;; email
-                                            ("8me" "guanghui8827@gmail.com")
+                                            ("8me" "qq727474430@gmail.com")
 
                                             ;; computing tech
                                             ("8wp" "Wikipedia")
@@ -33,13 +33,12 @@
                                             ("8win" "Windows")
                                             ("8ie" "Internet Explorer")
                                             ("8ahk" "AutoHotkey")
-                                            ("82dx" "Cocos2D-X")
 
                                             ;; signature
-                                            ("8zl" "zilongshanren")
+                                            ("8wl" "wangliang")
                                             ;; emacs regex
                                             ("8d" "\\([0-9]+?\\)")
                                             ("8str" "\\([^\"]+?\\)\"")))
 
 
-(setq user-mail-address "guanghui8827@gmail.com")
+(setq user-mail-address "qq727474430@gmail.com")

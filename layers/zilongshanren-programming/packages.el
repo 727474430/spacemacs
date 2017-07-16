@@ -300,7 +300,7 @@
     (progn
       (setq flycheck-display-errors-delay 0.9)
       (setq flycheck-idle-change-delay 2.0)
-      )))
+     )))
 
 (defun zilongshanren-programming/post-init-eldoc ()
   (setq eldoc-idle-delay 0.4))
@@ -333,7 +333,8 @@
     (spacemacs|define-jump-handlers js2-mode)
     (add-hook 'spacemacs-jump-handlers-js2-mode 'etags-select-find-tag-at-point)
 
-    (setq company-backends-js2-mode '((company-dabbrev-code :with company-keywords company-etags)
+    (setq company-backends-js2-mode '((company-tern)
+                                      (company-dabbrev-code :with company-keywords company-etags)
                                       company-files company-dabbrev))
 
     (zilongshanren|toggle-company-backends company-tern)

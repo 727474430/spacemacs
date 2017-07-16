@@ -35,12 +35,27 @@
     :init
     (progn
       ;; do your configuration here
-      (setq blog-admin-backend-type 'hexo
-            blog-admin-backend-path blog-admin-dir
-            blog-admin-backend-new-post-with-same-name-dir nil
-            blog-admin-backend-hexo-config-file "_config.yml"
+      (setq blog-admin-backend-type 'hexo   ;; 后台类型
+            blog-admin-backend-path "~/blog"                ;; hexo 博客所在路径
+            blog-admin-backend-new-post-in-drafts t             ;; 默认在drafts创建文章
+            blog-admin-backend-new-post-with-same-name-dir t  ;; 默认不创建相应的目录，因为我目前没有发现这个目录的作用，先干掉
+            blog-admin-backend-hexo-config-file "_config.yml"   ;; hexo 配置文件
             )
-      (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
+      ;; (evilified-state-evilify-map blog-admin-mode-map :mode blog-admin-mode)
+      (add-hook 'blog-admin-backend-after-new-post-hook 'find-file) ;; Open post after create new post
+      (setq blog-admin-backend-hexo-template-org-post               ;; post模板
+            "#+TITLE: %s
+ 	     	 #+AUTHOR: wangliang
+ 	     	 #+EMAIL: 727474430@qq.com
+ 	     	 #+DATE: %s
+ 	     	 #+LAYOUT: post
+ 	     	 #+TAGS:
+ 	     	 #+CATEGORIES:
+ 	     	 #+DESCRIPTON:
+             #+OPTIONS: num:nil toc:nil
+             #+OPTIONS: html-postamble:nil html-preamble:t
+             #+MACRO: READMORE@@html:<!--more-->@@
+ 	     	 ")
       )))
 
 (defun zilongshanren-org/post-init-org-pomodoro ()
@@ -57,7 +72,7 @@
   (add-hook 'org-mode-hook (lambda () (spacemacs/toggle-line-numbers-off)) 'append)
   (with-eval-after-load 'org
     (progn
-      
+
       (spacemacs|disable-company org-mode)
       (spacemacs/set-leader-keys-for-major-mode 'org-mode
         "," 'org-priority)
@@ -119,11 +134,20 @@
 
       (setq org-tags-match-list-sublevels nil)
 
+      ;; set org-mode in look sunrise sunset
+      (setq calendar-latitude 30.559253)
+      (setq calendar-longitude 104.095397)
+      (setq calendar-location-name "ChengDu, GaoXin")
+
       (add-hook 'org-mode-hook '(lambda ()
                                   ;; keybinding for editing source code blocks
                                   ;; keybinding for inserting code blocks
                                   (local-set-key (kbd "C-c i s")
-                                                 'zilongshanren/org-insert-src-block)))
+                                                 'wangliang/org-insert-src-block)
+                                  ;; keybinding for editing source code blocks
+                                  (local-set-key (kbd "C-c i e")
+                                                 'org-edit-src-code)
+                                  ))
       (require 'ox-publish)
       (add-to-list 'org-latex-classes '("ctexart" "\\documentclass[11pt]{ctexart}
                                         [NO-DEFAULT-PACKAGES]
@@ -208,6 +232,9 @@
          (emacs-lisp . t)
          (plantuml . t)
          (C . t)
+         (java . t)
+         (sql . t)
+         (ledger . t)
          (ditaa . t)))
 
 
@@ -278,57 +305,11 @@ unwanted space when exporting org-mode to html."
               ("wc" "不重要且紧急的任务" tags-todo "+PRIORITY=\"C\"")
               ("b" "Blog" tags-todo "BLOG")
               ("p" . "项目安排")
-              ("pw" tags-todo "PROJECT+WORK+CATEGORY=\"cocos2d-x\"")
               ("pl" tags-todo "PROJECT+DREAM+CATEGORY=\"zilongshanren\"")
               ("W" "Weekly Review"
                ((stuck "") ;; review stuck projects as designated by org-stuck-projects
-                (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
+                (tags-todo "") ;; review all projects (assuming you use todo keywords to designate projects)
                 ))))
-
-      (defvar zilongshanren-website-html-preamble
-        "<div class='nav'>
-<ul>
-<li><a href='http://zilongshanren.com'>博客</a></li>
-<li><a href='/index.html'>Wiki目录</a></li>
-</ul>
-</div>")
-      (defvar zilongshanren-website-html-blog-head
-        " <link rel='stylesheet' href='css/site.css' type='text/css'/> \n
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/worg.css\"/>")
-      (setq org-publish-project-alist
-            `(
-              ("blog-notes"
-               :base-directory "~/org-notes"
-               :base-extension "org"
-               :publishing-directory "~/org-notes/public_html/"
-
-               :recursive t
-               :html-head , zilongshanren-website-html-blog-head
-               :publishing-function org-html-publish-to-html
-               :headline-levels 4       ; Just the default for this project.
-               :auto-preamble t
-               :exclude "gtd.org"
-               :exclude-tags ("ol" "noexport")
-               :section-numbers nil
-               :html-preamble ,zilongshanren-website-html-preamble
-               :author "zilongshanren"
-               :email "guanghui8827@gmail.com"
-               :auto-sitemap t          ; Generate sitemap.org automagically...
-               :sitemap-filename "index.org" ; ... call it sitemap.org (it's the default)...
-               :sitemap-title "我的wiki"     ; ... with title 'Sitemap'.
-               :sitemap-sort-files anti-chronologically
-               :sitemap-file-entry-format "%t" ; %d to output date, we don't need date here
-               )
-              ("blog-static"
-               :base-directory "~/org-notes"
-               :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-               :publishing-directory "~/org-notes/public_html/"
-               :recursive t
-               :publishing-function org-publish-attachment
-               )
-              ("blog" :components ("blog-notes" "blog-static"))))
-
-
 
       (add-hook 'org-after-todo-statistics-hook 'zilong/org-summary-todo)
       ;; used by zilong/org-clock-sum-today-by-tags
@@ -437,7 +418,30 @@ holding contextual information."
   (use-package org-tree-slide
     :init
     (spacemacs/set-leader-keys "oto" 'org-tree-slide-mode)))
+(defun zilongshanren-org/init-gcal ()
+  (use-package calfw
+    :ensure ;TODO:
+    :config
+    (require 'calfw)
+    (require 'calfw-org)
+    (setq cfw:org-overwrite-default-keybinding t)
+    (require 'calfw-ical)
 
+    (defun mycalendar ()
+      (interactive)
+      (cfw:open-calendar-buffer
+       :contents-sources
+       (list
+        ;; (cfw:org-create-source "Green")  ; orgmode source
+        (cfw:ical-create-source "gcal" "/Users/wangliang/org-notes/gtd.ics" "IndianRed") ; devorah calender
+        )))
+    (setq cfw:org-overwrite-default-keybinding t))
+
+  (use-package calfw-gcal
+	:ensure t
+	:config
+	(require 'calfw-gcal))
+  )
 
 (defun zilongshanren-org/init-org-download ()
   (use-package org-download
