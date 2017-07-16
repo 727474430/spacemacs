@@ -1,0 +1,15 @@
+* test sql
+  #+name: my-query01
+  #+BEGIN_SRC sql :engine mysql :cmdline "-h 127.0.0.1 -u root -p q84518936"
+  show database;
+  #+END_SRC
+
+  #+RESULTS: my-query01
+
+
+  #+BEGIN_SRC emacs-lisp
+    (message "Hello Emacs-Lisp")
+  #+END_SRC
+
+  #+RESULTS:
+  : Hello Emacs-Lisp
