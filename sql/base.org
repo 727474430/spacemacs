@@ -13,3 +13,8 @@
 
   #+RESULTS:
   : Hello Emacs-Lisp
+
+  #+BEGIN_SRC sql :engine mysql :cmdline "-h 192.168.0.147 -u root -p 123456"
+    use jeesite;
+    show tbales;
+  #+END_SRC

@@ -97,10 +97,8 @@ values."
                                       elfeed
                                       elfeed-org
                                       bing-dict ;; 翻译且保存, 拥有自己的词典.
-                                      org-gcal
-                                      calfw-gcal
-                                      calfw
                                       request
+                                      org-gcal
                                       ein ;; add the ein package (Emacs ipython notebook)
                                       elpy
                                       py-autopep8 ;; add the autopep8 pep8
@@ -377,13 +375,12 @@ values."
   )
 
 (defun dotspacemacs/user-config ()
-  (require 'calfw)
+  ;; (require 'calfw)
   (require 'org-gcal)
   (setq org-gcal-client-id "704259546218-d65eg8c8heofai3lvd4qcrcvgj4rkp1k.apps.googleusercontent.com"
         org-gcal-client-secret "Am1LJTn6AZ6httQAnJ-ge2T0"
         org-gcal-file-alist '(("qq727474430@gmail.com" .  "~/org-notes/i.org")
                               ))
-
   (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
   (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
 
@@ -418,8 +415,8 @@ values."
   (setq org-bullets-bullet-list '("🐉" "🐠" "🐬" "🐤"))
 
   ;; appt workday rest alert
-  ;; (setq appt-message-warning-time 0)    ; 0 minute time before warning
-  ;; (setq diary-file "~/diary")
+  (setq appt-message-warning-time 0) ; 0 minute time before warning
+  (setq diary-file "~/diary")
 
 
   ;; org-mode 提醒

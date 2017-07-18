@@ -28,6 +28,8 @@
     )
   )
 
+
+
 (defun zilongshanren-org/init-blog-admin ()
   (use-package blog-admin
     :defer t
@@ -281,8 +283,8 @@ unwanted space when exporting org-mode to html."
               ("s" "Code Snippet" entry
                (file org-agenda-file-code-snippet)
                "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")
-              ("w" "work" entry (file+headline org-agenda-file-gtd "Cocos2D-X")
-               "* TODO [#A] %?\n  %i\n %U"
+              ("w" "work" entry (file+headline org-agenda-file-gtd "Eagle")
+               "* TODO [#A] %?\n  %i\n "
                :empty-lines 1)
               ("c" "Chrome" entry (file+headline org-agenda-file-note "Quick notes")
                "* TODO [#C] %?\n %(zilongshanren/retrieve-chrome-current-tab-url)\n %i\n %U"
