@@ -70,3 +70,21 @@ for( var a in array) {
 for( var a of array) {
 	console.log(a);
 }
+
+
+var fibonacci = {
+    [Symbol.iterator]: function*() {
+        var pre = 0, cur = 1;
+        for (;;) {
+            var temp = pre;
+            pre = cur;
+            cur += temp;
+            yield cur;
+        }
+    }
+};
+
+var array = ['a', 'b', 'c', 'd'];
+for (let ar of array) {
+    console.log(ar);
+}

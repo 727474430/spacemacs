@@ -11,6 +11,7 @@
 (require 'cl)
 
 (setq octopress-workdir (expand-file-name "~/4gamers.cn/"))
+(setq calendar-mark-diary-entries-flag t)
 
 (defun zilongshanren/octopress-rake (command)
   "run rake commands"

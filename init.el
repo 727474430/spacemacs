@@ -415,9 +415,11 @@ values."
   (setq org-bullets-bullet-list '("🐉" "🐠" "🐬" "🐤"))
 
   ;; appt workday rest alert
-  (setq appt-message-warning-time 0) ; 0 minute time before warning
-  (setq diary-file "~/diary")
+  ;; (setq appt-message-warning-time 0)
+                                        ; 0 minute time before warning
+  ;; (setq diary-file "~/diary")
 
+  (setq appt-display-diary nil)
 
   ;; org-mode 提醒
   (setq appt-time-msg-list nil) ;; clear existing appt list
