@@ -94,6 +94,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      shrink-whitespace
                                       elfeed
                                       elfeed-org
                                       bing-dict ;; 翻译且保存, 拥有自己的词典.
@@ -383,6 +384,8 @@ values."
                               ))
   (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
   (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
+  ;; tramp just need input once password
+  ;; (setq tramp-use-ssh-controlmaster-options nil)
 
   ;; org-mode 自动换行
   (add-hook 'org-mode-hook

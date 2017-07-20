@@ -149,6 +149,10 @@
                                   ;; keybinding for editing source code blocks
                                   (local-set-key (kbd "C-c i e")
                                                  'org-edit-src-code)
+
+                                  ;; 选中同列下一行
+                                  (local-set-key (kbd "M-n")
+                                                 'mc/mark-next-like-this)
                                   ))
       (require 'ox-publish)
       (add-to-list 'org-latex-classes '("ctexart" "\\documentclass[11pt]{ctexart}

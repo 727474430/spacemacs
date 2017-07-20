@@ -1,5 +1,5 @@
 ;;; keybindings.el --- zilongshanren Layer packages File for Spacemacs
-;;
+;
 ;; Copyright (c) 2015-2016 zilongshanren
 ;;
 ;; Author: zilongshanren <guanghui8827@gmail.com>
@@ -181,3 +181,8 @@
   (global-set-key (kbd "s-n") 'make-frame)
   (global-set-key (kbd "s-z") 'undo-tree-undo)
   (global-set-key (kbd "s-Z") 'undo-tree-redo))
+
+;; shrink-whitespace
+(global-set-key (kbd "M-SPC") 'shrink-whitespace)
+;; set-mark-command
+(global-set-key (kbd "S-SPC") 'set-mark-command)
