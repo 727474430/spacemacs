@@ -109,6 +109,7 @@ values."
                                       kanban
                                       sicp
                                       kotlin-mode
+                                      meghanada
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -376,6 +377,25 @@ values."
   )
 
 (defun dotspacemacs/user-config ()
+  ;; meghanada
+  (require 'meghanada)
+  (add-hook 'java-mode-hook
+            (lambda ()
+              ;; meghanada-mode on
+              (meghanada-mode t)
+              (setq c-basic-offset 2)
+              ;; use code format
+              (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
+
+  ;; multi-term
+  (setq multi-term-program "/bin/zsh")
+  (add-hook 'term-mode-hook
+            (lambda ()
+              (setq term-buffer-maximum-size 0)
+              (add-to-list 'term-bind-key-alist '("M-[" . multi-term-prev))
+              (add-to-list 'term-bind-key-alist '("M-]" . multi-term-next))))
+
+
   ;; (require 'calfw)
   (require 'org-gcal)
   (setq org-gcal-client-id "704259546218-d65eg8c8heofai3lvd4qcrcvgj4rkp1k.apps.googleusercontent.com"
