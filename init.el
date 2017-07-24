@@ -110,6 +110,7 @@ values."
                                       sicp
                                       kotlin-mode
                                       meghanada
+                                      edit-server
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -386,6 +387,10 @@ values."
               (setq c-basic-offset 2)
               ;; use code format
               (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
+
+  ;; edit-server
+  (require 'edit-server)
+  (edit-server-start)
 
   ;; multi-term
   (setq multi-term-program "/bin/zsh")
