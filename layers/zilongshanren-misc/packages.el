@@ -43,7 +43,23 @@
         golden-ratio
         (highlight-global :location (recipe :fetcher github :repo "glen-dai/highlight-global"))
         browse-at-remote
+        sx
         ))
+
+;; add sx(stack-exchange) shoutcut key
+(defun zilongshanren-misc/init-sx ()
+  (use-package sx
+    :config
+    (bind-keys :prefix "C-c s"
+               :prefix-map my-sx-map
+               :prefix-docstring "Global keymap for SX."
+               ("q" . sx-tab-all-questions)
+               ("i" . sx-inbox)
+               ("o" . sx-open-link)
+               ("u" . sx-tab-unanswered-my-tags)
+               ("a" . sx-ask)
+               ("s" . sx-search))
+    ))
 
 (defun zilongshanren-misc/init-browse-at-remote ()
   (use-package browse-at-remote
