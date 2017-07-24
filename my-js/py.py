@@ -1,4 +1,5 @@
-import requests
+def hello():
+    print("Hello World")
 
-res = requests.get("http://www.baidu.com")
-print(res)
+
+hello()
