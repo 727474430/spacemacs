@@ -21,8 +21,23 @@
     ;; spaceline
     ;; beacon
     ;; evil-vimish-fold
+    edit-server
     )
   )
+
+(defun zilongshanren-ui/init-edit-server ()
+  :defer t
+  :init t
+  (progn
+    ;; edit-server
+    (require 'edit-server)
+    (edit-server-start)
+    (setq edit-server-url-major-mode-alist
+          '(("github\\.com" . markdown-mode)
+            ("i\\.everet\\.org" . moinmoin-mode)))
+    )
+  )
+
 
 (defun zilongshanren-ui/init-zilong-mode-line ()
   (defun zilongshanren/display-mode-indent-width ()
@@ -267,7 +282,7 @@ This segment overrides the modeline functionality of `org-mode-line-string'."
       :evil-leader "ots")
     (add-hook 'markdown-mode-hook
               #'(lambda ()
-                 (set (make-local-variable 'pangu-spacing-real-insert-separtor) t)))))
+                  (set (make-local-variable 'pangu-spacing-real-insert-separtor) t)))))
 
 (defun zilongshanren-ui/post-init-popwin ()
   (progn

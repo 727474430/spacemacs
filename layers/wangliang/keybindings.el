@@ -186,3 +186,9 @@
 (global-set-key (kbd "M-SPC") 'shrink-whitespace)
 ;; set-mark-command
 (global-set-key (kbd "S-SPC") 'set-mark-command)
+
+;; find .emacs.desktop file path
+(global-set-key (kbd "C-x g d") 'desktop-change-dir)
+
+;; controller markdown-mode image show with hidden
+(global-set-key (kbd "<f12>") 'iimage-mode)

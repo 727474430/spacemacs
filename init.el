@@ -109,8 +109,6 @@ values."
                                       kanban
                                       sicp
                                       kotlin-mode
-                                      meghanada
-                                      edit-server
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -379,18 +377,31 @@ values."
 
 (defun dotspacemacs/user-config ()
   ;; meghanada
-  (require 'meghanada)
-  (add-hook 'java-mode-hook
-            (lambda ()
-              ;; meghanada-mode on
-              (meghanada-mode t)
-              (setq c-basic-offset 2)
-              ;; use code format
-              (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
+  ;; (require 'meghanada)
+  ;; (add-hook 'java-mode-hook
+  ;;           (lambda ()
+  ;;             ;; meghanada-mode on
+  ;;             (meghanada-mode t)
+  ;;             (setq c-basic-offset 2)
+  ;;             ;; use code format
+  ;;             (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
 
-  ;; edit-server
-  (require 'edit-server)
-  (edit-server-start)
+
+  ;; session select
+  (setq session-key-dir-map '(("v" "~/workspace/Eagle_V3")
+                              ("p" "~/workspace/Eagle_Portal")
+                              ("d" "~/workspace/DataManager")
+                              ))
+  (while session-key-dir-map
+    (lexical-let* ((item (car session-key-dir-map))
+                   (key (car item))
+                   (path (car (cdr item))))
+      (global-set-key (kbd (concat "C-x g g " key))
+                      #'(lambda () (interactive) (desktop-change-dir path)))
+      (setq session-key-dir-map (cdr session-key-dir-map)))
+    )
+
+
 
   ;; multi-term
   (setq multi-term-program "/bin/zsh")
