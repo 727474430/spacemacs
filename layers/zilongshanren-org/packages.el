@@ -3,7 +3,7 @@
 ;; Copyright (c) 2014-2016 zilongshanren
 ;;
 ;; Author: guanghui <guanghui8827@gmail.com>
-;; URL: https://github.com/zilongshanren/spacemacs-private
+;; URL: https://github.com/727474430/spacemacs
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -25,9 +25,24 @@
     ;; worf
     ;; org-download
     ;; plain-org-wiki
+    org-gcal
     )
   )
 
+(defun zilongshanren-org/init-org-gcal ()
+  (use-package org-gcal
+    :init
+    (progn
+      ;; using google-calendar sync org-agenda
+      (setq org-gcal-client-id "704259546218-d65eg8c8heofai3lvd4qcrcvgj4rkp1k.apps.googleusercontent.com"
+            org-gcal-client-secret "Am1LJTn6AZ6httQAnJ-ge2T0"
+            org-gcal-file-alist '(("qq727474430@gmail.com" .  "~/org-notes/gcal.org")
+                                  ))
+      (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+      (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
+      )
+    )
+  )
 
 
 (defun zilongshanren-org/init-blog-admin ()

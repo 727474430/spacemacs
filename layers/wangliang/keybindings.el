@@ -156,7 +156,7 @@
 (spacemacs/set-leader-keys "ols" 'zilongshanren/save-my-layout)
 (spacemacs/set-leader-keys "ob" 'popwin:display-last-buffer)
 (spacemacs/set-leader-keys "oy" 'youdao-dictionary-search-at-point+)
-(spacemacs/set-leader-keys "ot" 'youdao-dictionary-search-at-point)
+(spacemacs/set-leader-keys "yy" 'youdao-dictionary-search-at-point)
 (spacemacs/set-leader-keys "oo" 'youdao-dictionary-play-voice-at-point)
 (spacemacs/set-leader-keys "bM" 'spacemacs/switch-to-messages-buffer)
 
