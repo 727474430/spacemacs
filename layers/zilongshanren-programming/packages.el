@@ -46,6 +46,20 @@
         robe
         ))
 
+;; (defun zilongshanren-programming/post-init-eclim ()
+;;   (use-package eclim
+;;     :defer t
+;;     :init
+;;     (progn
+;;       (setq eclimd-autostart t)
+;;       (defun my-java-mode-hook ()
+;;         (eclim-mode t))
+;;       (add-hook 'java-mode-hook 'my-java-mode-hook)
+;;       )
+;;     )
+;;   )
+
+
 (defun zilongshanren-programming/post-init-robe ()
   (progn
     (add-hook 'inf-ruby-mode-hook 'spacemacs/toggle-auto-completion-on)

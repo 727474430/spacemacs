@@ -181,6 +181,7 @@ org-files and bookmarks"
                    ("HomePage" . (lambda () (browse-url "http://localhost:4000")))
                    ("ZhiHu" . (lambda () (browse-url "https://www.zhihu.com/")))
                    ("JueJin" . (lambda () (browse-url "https://juejin.im/")))
+                   ("Portal" . (lambda () (browse-url "http://localhost:8081/Eagle_Portal")))
                    ("JianShu" . (lambda () (browse-url "http://www.jianshu.com/")))
                    ))
     (candidate-number-limit)

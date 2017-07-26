@@ -108,6 +108,8 @@ values."
                                       kanban
                                       sicp
                                       kotlin-mode
+                                      eclim
+                                      company-emacs-eclim
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -375,6 +377,22 @@ values."
   )
 
 (defun dotspacemacs/user-config ()
+  ;; eclim config
+  (require 'eclim)
+  (custom-set-variables
+   '(eclim-eclipse-dirs (quote ("~/jee-oxygen/eclipse")))
+   '(eclim-executable "~/jee-oxygen/eclipse/eclim"))
+
+
+
+  ;; (require 'company)
+  ;; (require 'company-emacs-eclim)
+  ;; (company-emacs-eclim-setup)
+  ;; (global-company-mode t)
+  ;; (global-set-key (kbd "M-/") 'company-emacs-eclim)
+
+
+
   ;; meghanada
   ;; (require 'meghanada)
   ;; (add-hook 'java-mode-hook
