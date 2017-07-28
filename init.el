@@ -193,6 +193,7 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         apropospriate-dark
                          solarized-light
                          solarized-dark)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
@@ -379,44 +380,40 @@ values."
 (defun dotspacemacs/user-config ()
   ;; eclim config
   (require 'eclim)
+  ;; auto start eclim
+  (setq eclimd-autostart t)
+  ;; in java-mode time , open eclim-mode
+  (defun my-java-mode-hook ()
+    (eclim-mode t))
+  (add-hook 'java-mode-hook 'my-java-mode-hook)
+  ;; eclim using path
   (custom-set-variables
    '(eclim-eclipse-dirs (quote ("~/jee-oxygen/eclipse")))
    '(eclim-executable "~/jee-oxygen/eclipse/eclim"))
-
-
-
-  ;; (require 'company)
-  ;; (require 'company-emacs-eclim)
-  ;; (company-emacs-eclim-setup)
-  ;; (global-company-mode t)
-  ;; (global-set-key (kbd "M-/") 'company-emacs-eclim)
-
-
-
-  ;; meghanada
-  ;; (require 'meghanada)
-  ;; (add-hook 'java-mode-hook
-  ;;           (lambda ()
-  ;;             ;; meghanada-mode on
-  ;;             (meghanada-mode t)
-  ;;             (setq c-basic-offset 2)
-  ;;             ;; use code format
-  ;;             (add-hook 'before-save-hook 'meghanada-code-beautify-before-save)))
+  ;; show code error info in the buffer
+  (setq help-at-pt-display-when-idle t)
+  (setq help-at-pt-timer-delay 0.1)
+  (help-at-pt-set-timer)
+  ;; eclim company
+  (require 'company-emacs-eclim)
+  (company-emacs-eclim-setup)
+  (global-company-mode t)
+  (global-set-key (kbd "M-/") 'company-emacs-eclim)
 
 
   ;; session select
-  (setq session-key-dir-map '(("v" "~/workspace/Eagle_V3")
-                              ("p" "~/workspace/Eagle_Portal")
-                              ("d" "~/workspace/DataManager")
-                              ))
-  (while session-key-dir-map
-    (lexical-let* ((item (car session-key-dir-map))
-                   (key (car item))
-                   (path (car (cdr item))))
-      (global-set-key (kbd (concat "C-x g g " key))
-                      #'(lambda () (interactive) (desktop-change-dir path)))
-      (setq session-key-dir-map (cdr session-key-dir-map)))
-    )
+  ;; (setq session-key-dir-map '(("v" "~/workspace/Eagle_V3")
+  ;;                             ("p" "~/workspace/Eagle_Portal")
+  ;;                             ("d" "~/workspace/DataManager")
+  ;;                             ))
+  ;; (while session-key-dir-map
+  ;;   (lexical-let* ((item (car session-key-dir-map))
+  ;;                  (key (car item))
+  ;;                  (path (car (cdr item))))
+  ;;     (global-set-key (kbd (concat "C-x g g " key))
+  ;;                     #'(lambda () (interactive) (desktop-change-dir path)))
+  ;;     (setq session-key-dir-map (cdr session-key-dir-map)))
+  ;;   )
 
 
   ;; multi-term
@@ -459,7 +456,7 @@ values."
   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
   (require 'kanban)
-  (setq org-bullets-bullet-list '("🐉" "🐠" "🐬" "🐤"))
+  ;; (setq org-bullets-bullet-list '("🐉" "🐠" "🐬" "🐤"))
 
   ;; appt workday rest alert
   ;; (setq appt-message-warning-time 0)

@@ -46,19 +46,6 @@
         robe
         ))
 
-;; (defun zilongshanren-programming/post-init-eclim ()
-;;   (use-package eclim
-;;     :defer t
-;;     :init
-;;     (progn
-;;       (setq eclimd-autostart t)
-;;       (defun my-java-mode-hook ()
-;;         (eclim-mode t))
-;;       (add-hook 'java-mode-hook 'my-java-mode-hook)
-;;       )
-;;     )
-;;   )
-
 
 (defun zilongshanren-programming/post-init-robe ()
   (progn
@@ -120,8 +107,8 @@
 
 (defun zilongshanren-programming/post-init-graphviz-dot-mode ()
   (with-eval-after-load 'graphviz-dot-mode
-      (require 'company-keywords)
-      (push '(graphviz-dot-mode  "digraph" "node" "shape" "subgraph" "label" "edge" "bgcolor" "style" "record") company-keywords-alist)))
+    (require 'company-keywords)
+    (push '(graphviz-dot-mode  "digraph" "node" "shape" "subgraph" "label" "edge" "bgcolor" "style" "record") company-keywords-alist)))
 
 (defun zilongshanren-programming/post-init-dumb-jump ()
   (setq dumb-jump-selector 'ivy)
@@ -135,7 +122,7 @@
   )
 
 (defun zilongshanren-programming/post-init-emacs-lisp ()
-    (remove-hook 'emacs-lisp-mode-hook 'auto-compile-mode))
+  (remove-hook 'emacs-lisp-mode-hook 'auto-compile-mode))
 
 (defun zilongshanren-programming/post-init-python ()
   (add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
@@ -148,7 +135,7 @@
         js-doc-url "http://www.zilongshanren.com"
         js-doc-license "MIT")
 
- (defun my-js-doc-insert-function-doc-snippet ()
+  (defun my-js-doc-insert-function-doc-snippet ()
     "Insert JsDoc style comment of the function with yasnippet."
     (interactive)
 
@@ -224,8 +211,8 @@
     (set-face-background 'secondary-selection "gray")
     (setq-default yas-prompt-functions '(yas-ido-prompt yas-dropdown-prompt))
     (mapc #'(lambda (hook) (remove-hook hook 'spacemacs/load-yasnippet)) '(prog-mode-hook
-                                                                      org-mode-hook
-                                                                      markdown-mode-hook))
+                                                                           org-mode-hook
+                                                                           markdown-mode-hook))
 
     (spacemacs/add-to-hooks 'zilongshanren/load-yasnippet '(prog-mode-hook
                                                             markdown-mode-hook
@@ -303,7 +290,7 @@
 (defun zilongshanren-programming/post-init-cmake-mode ()
   (progn
     (spacemacs/declare-prefix-for-mode 'cmake-mode
-                                       "mh" "docs")
+      "mh" "docs")
     (spacemacs/set-leader-keys-for-major-mode 'cmake-mode
       "hd" 'cmake-help)
     (add-hook 'cmake-mode-hook (function cmake-rename-buffer))))
@@ -314,7 +301,7 @@
     (progn
       (setq flycheck-display-errors-delay 0.9)
       (setq flycheck-idle-change-delay 2.0)
-     )))
+      )))
 
 (defun zilongshanren-programming/post-init-eldoc ()
   (setq eldoc-idle-delay 0.4))
@@ -451,7 +438,7 @@
     :init
     (progn
       (spacemacs/declare-prefix-for-mode 'js2-mode
-                                         "ms" "REPL")
+        "ms" "REPL")
       (spacemacs/set-leader-keys-for-major-mode 'js2-mode
         "sb" 'nodejs-repl-eval-buffer
         "sf" 'nodejs-repl-eval-function
